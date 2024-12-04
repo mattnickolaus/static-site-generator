@@ -1,7 +1,6 @@
 import unittest
 
-from src.htmlnode import LeafNode, text_node_to_html_node
-from src.textnode import TextNode
+from src.textnode import TextNode, text_node_to_html_node
 
 class TestTextToHtml(unittest.TestCase):
     def setUp(self):
