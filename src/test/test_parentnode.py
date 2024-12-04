@@ -2,7 +2,7 @@ import unittest
 
 from src.htmlnode import ParentNode, LeafNode
 
-class TestLeafNode(unittest.TestCase):
+class TestParentNode(unittest.TestCase):
     def setUp(self):
         # Leaf node examples
         self.leaf_with_tag = LeafNode("b", "Bold text")
