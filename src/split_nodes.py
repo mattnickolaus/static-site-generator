@@ -6,7 +6,7 @@ def split_nodes_delimiter(old_nodes, delimiter, text_type):
 
     for old_node in old_nodes:
         if old_node.text_type != TextType.TEXT:
-            return new_nodes.append(old_node)
+            new_nodes.append(old_node)
 
         raw_text = old_node.text
 
@@ -21,12 +21,14 @@ def split_nodes_delimiter(old_nodes, delimiter, text_type):
         if delimiter not in raw_text:
             raise Exception(f"Delimiter not found:'{delimiter}'")
         split_nodes = raw_text.split(delimiter)
+        text_nodes = split_nodes[0::2]
+        edited_nodes = split_nodes[1::2]
 
         match delimiter:
             case "**":
-
-                return
+                
             # case "*":
 
             # case "`":
+
 
