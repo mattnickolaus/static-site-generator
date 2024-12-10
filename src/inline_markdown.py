@@ -59,6 +59,8 @@ def split_nodes_image(old_nodes):
 
         for image_alt, image_link in list_of_image_contents:
             sections = original_text.split(f"![{image_alt}]({image_link})", 1)
+            if len(sections) != 2:
+                raise ValueError("Invalid markdown, image section not closed")
             if sections[0] != "":
                 new_nodes.append(TextNode(sections[0], TextType.TEXT))
             new_nodes.append(TextNode(image_alt, TextType.IMAGE, image_link))
@@ -88,6 +90,8 @@ def split_nodes_link(old_nodes):
 
         for link_text, link_url in list_of_link_contents:
             sections = original_text.split(f"[{link_text}]({link_url})", 1)
+            if len(sections) != 2:
+                raise ValueError("Invalid markdown, image section not closed")
             if sections[0] != "":
                 new_nodes.append(TextNode(sections[0], TextType.TEXT))
             new_nodes.append(TextNode(link_text, TextType.LINK, link_url))
