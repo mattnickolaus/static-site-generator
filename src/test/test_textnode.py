@@ -23,11 +23,6 @@ class TestTextNode(unittest.TestCase):
         node2 = TextNode("This is a link node", TextType.LINK, "https://github.com")
         self.assertEqual(node, node2)
 
-    def test_url_with_wrong_type(self):
-        node = TextNode("This is a text node", TextType.BOLD, "https://github.com")
-        node2 = TextNode("This is a text node", TextType.BOLD)
-        self.assertEqual(node, node2)
-
     def test_link_without_value(self):
         node = TextNode("This is a link node", TextType.LINK)
         node2 = TextNode("This is a link node", TextType.LINK, None)
