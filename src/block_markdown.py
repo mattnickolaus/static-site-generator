@@ -88,6 +88,9 @@ def create_html_parent_node_from_block(block, block_type):
         case "paragraph":
             paragraph_child = paragraph_processing_children(block)
             return ParentNode(tag="p", children=paragraph_child)
+        case _:
+            raise ValueError("Invalid Block type")
+
 
 def text_to_children(text):
     text_nodes = text_to_textnodes(text)
