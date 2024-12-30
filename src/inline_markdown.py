@@ -10,6 +10,7 @@ def split_nodes_delimiter(old_nodes, delimiter, text_type):
             continue
 
         raw_text = old_node.text
+        # print(raw_text)
 
         # Checks to see if Markdown delimiter appears twice
         delimiter_appears = 0
@@ -19,15 +20,17 @@ def split_nodes_delimiter(old_nodes, delimiter, text_type):
         if delimiter_appears % 2 != 0:
             raise Exception(f"Invalid Markdown Syntax: Missing the a matching '{delimiter}'")
 
-        split_nodes = raw_text.split(delimiter)
+        split_nodes = []
+        sections = raw_text.split(delimiter)
 
-        for i in range(len(split_nodes)):
-            if split_nodes[i] == "":
+        for i in range(len(sections)):
+            if sections[i] == "":
                 continue
             if i % 2 == 0:
-                new_nodes.append(TextNode(split_nodes[i], TextType.TEXT))
+                split_nodes.append(TextNode(sections[i], TextType.TEXT))
             else:
-                new_nodes.append(TextNode(split_nodes[i], text_type))
+                split_nodes.append(TextNode(sections[i], text_type))
+        new_nodes.extend(split_nodes)
 
     return new_nodes
 

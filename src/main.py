@@ -1,4 +1,4 @@
-from textnode import TextNode
+from src.textnode import TextNode
 
 def main():
     bold_node = TextNode("This is a text node", "bold")

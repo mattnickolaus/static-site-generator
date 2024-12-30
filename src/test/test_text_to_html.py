@@ -1,26 +1,26 @@
 import unittest
 
-from src.textnode import TextNode, text_node_to_html_node
+from src.textnode import TextNode, text_node_to_html_node, TextType
 
 class TestTextToHtml(unittest.TestCase):
     def setUp(self):
         # text, text_type, url=None
-        self.text_node = TextNode("Normal Text", "text")
+        self.text_node = TextNode("Normal Text", TextType.TEXT)
         self.text_no_tag = text_node_to_html_node(self.text_node)
 
-        self.bold_node = TextNode("Bold Text", "bold")
+        self.bold_node = TextNode("Bold Text", TextType.BOLD)
         self.bold = text_node_to_html_node(self.bold_node)
 
-        self.italic_node = TextNode("Italic Text", "italic")
+        self.italic_node = TextNode("Italic Text", TextType.ITALIC)
         self.italic = text_node_to_html_node(self.italic_node)
 
-        self.code_node = TextNode("Code Text", "code")
+        self.code_node = TextNode("Code Text", TextType.CODE)
         self.code = text_node_to_html_node(self.code_node)
 
-        self.link_node = TextNode("Click here", "link", "boot.dev")
+        self.link_node = TextNode("Click here", TextType.LINK, "boot.dev")
         self.link = text_node_to_html_node(self.link_node)
 
-        self.image_node = TextNode("Alt Image", "image", "image.jpg")
+        self.image_node = TextNode("Alt Image", TextType.IMAGE, "image.jpg")
         self.image = text_node_to_html_node(self.image_node)
 
     def test_text_no_tag(self):
