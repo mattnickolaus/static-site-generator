@@ -1,11 +1,11 @@
-from src.textnode import TextNode
+from generate_static import delete_and_copy_source_to_destination
+
+dir_path_static = "../static"
+dir_path_public = "../public"
 
 def main():
-    bold_node = TextNode("This is a text node", "bold")
-    print(bold_node)
-
-    link_node = TextNode("This is a link node", "link", "https://www.boot.dev")
-    print(link_node)
-
+    delete_and_copy_source_to_destination(dir_path_static,dir_path_public)
+    # delete_and_copy_source_to_destination("/home/mattn/workspace/github.com/mattnickolaus/static-site-generator/static",
+    #                                   "/home/mattn/workspace/github.com/mattnickolaus/static-site-generator/public")
 
 main()
