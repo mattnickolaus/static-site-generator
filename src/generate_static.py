@@ -1,6 +1,18 @@
 import os
 import shutil
 
+def extract_title(markdown):
+    # Pulls the `h1` header from the markdown file (the line that starts with a single `# `) and return it.
+    #  - If there is no `h1` header, raise an exception.
+    #  - `extract_title("# Hello")` should return `"Hello"`(strip the `#` and any leading or trailing whitespace)
+    markdown_lines = markdown.split("\n")
+    for line in markdown_lines:
+        if line.startswith("# "):
+            return line.strip("# ")
+        else:
+            raise Exception("Must include h1 or '# ' header")
+
+
 def delete_and_copy_source_to_destination(source, destination):
     # 1. Delete all contents of destination dir
     if os.path.exists(destination) and os.listdir(destination):
