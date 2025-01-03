@@ -117,7 +117,6 @@ def count_headers(header_markdown):
 
 def code_block_processing_children(block):
     text_between_code_markers = block.split("```")[1]
-    print(text_between_code_markers)
     code_children = text_to_children(text_between_code_markers)
     return code_children
 

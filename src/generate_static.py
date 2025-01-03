@@ -47,6 +47,24 @@ def generate_page(from_path, template_path, dest_path):
         f.write(updated_with_content)
         print(f"File written to {dest_path}")
 
+def generate_pages_recursive(dir_path_content, template_path, dest_dir_path):
+    # Create a generate_pages_recursive(dir_path_content, template_path, dest_dir_path) function. It should:
+    # Crawl every entry in the content directory
+    content_dir = os.listdir(dir_path_content)
+
+    for file in content_dir:
+        content_path = os.path.join(dir_path_content, file)
+        dest_path = os.path.join(dest_dir_path, file)
+        if os.path.isfile(content_path):
+            if content_path[-3:] == ".md":
+                dest_path = dest_path[:-3] + ".html"
+                generate_page(content_path, template_path, dest_path)
+        else: # file is a dir
+            os.mkdir(dest_path)
+            generate_pages_recursive(content_path, template_path, dest_path)
+    # For each markdown file found, generate a new .html file using the same template.html.
+    # The generated pages should be written to the public directory in the same directory structure.
+
 
 def delete_and_copy_source_to_destination(source, destination):
     # 1. Delete all contents of destination dir
