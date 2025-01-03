@@ -1,3 +1,5 @@
+from block_markdown import markdown_to_html_node
+
 import os
 import shutil
 
@@ -11,6 +13,39 @@ def extract_title(markdown):
             return line.strip("# ")
         else:
             raise Exception("Must include h1 or '# ' header")
+
+
+def generate_page(from_path, template_path, dest_path):
+    # Print a message like "Generating page from from_path to dest_path using template_path".
+    print(f"Generating page from {from_path} to {dest_path} using {template_path}")
+    # Read the markdown file at from_path and store the contents in a variable.
+    if os.path.exists(from_path):
+        with open(from_path, 'r') as file:
+            markdown = file.read()
+    else:
+        raise Exception(f"From path does not exist: {from_path}")
+    # Read the template file at template_path and store the contents in a variable.
+    if os.path.exists(template_path):
+        with open(template_path, 'r') as file:
+            template = file.read()
+    else:
+        raise Exception(f"From path does not exist: {template_path}")
+    # Use your markdown_to_html_node function and .to_html() method to convert the markdown file to an HTML string.
+    html_string = markdown_to_html_node(markdown).to_html()
+    # Use the extract_title function to grab the title of the page.
+    title = extract_title(markdown)
+    # Replace the {{ Title }} and {{ Content }} placeholders in the template with the HTML and title you generated.
+    update_title = template.replace("{{ Title }}", title)
+    updated_with_content = update_title.replace("{{ Content }}", html_string)
+
+    # Write the new full HTML page to a file at dest_path. Be sure to create any necessary directories if they don't exist.
+    dirs = os.path.dirname(dest_path)
+    if not os.path.exists(dirs):
+        os.makedirs(dirs)
+        print(f"Made directory: {dirs}")
+    with open(dest_path, 'w') as f:
+        f.write(updated_with_content)
+        print(f"File written to {dest_path}")
 
 
 def delete_and_copy_source_to_destination(source, destination):

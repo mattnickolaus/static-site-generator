@@ -1,6 +1,6 @@
-from src.htmlnode import HTMLNode, ParentNode
-from src.inline_markdown import *
-from src.textnode import *
+from htmlnode import HTMLNode, ParentNode
+from inline_markdown import *
+from textnode import *
 
 # Accounts for white space before and after a \n (look at boot solution however to see if necessary)
 def pre_strip_spaces(markdown):
@@ -13,7 +13,7 @@ def pre_strip_spaces(markdown):
     return processed_string
 
 def markdown_to_blocks(markdown):
-    split = pre_strip_spaces(markdown).split("\n\n") # or you can take out the pre_strip_spaces and just include markdown
+    split = markdown.split("\n\n") # I took out the pre_strip_spaces and just include markdown
     edited_blocks = []
     for i in split:
         if i == "":
@@ -74,11 +74,11 @@ def create_html_parent_node_from_block(block, block_type):
             return ParentNode(tag=f"h{header_number}", children=text_to_children(header_block_value))
         case "code":
             code_child = code_block_processing_children(block)
-            code_block = ParentNode(tag="code", children=code_child)
+            code_block = [ParentNode(tag="code", children=code_child)]
             return ParentNode(tag="pre", children=code_block)
         case "quote":
             quote_child = quote_block_processing_children(block)
-            return ParentNode(tag="quoteblock", children=quote_child)
+            return ParentNode(tag="blockquote", children=quote_child)
         case "ordered-list":
             ordered_child = ordered_block_processing_children(block)
             return ParentNode(tag="ol", children=ordered_child)
@@ -97,7 +97,10 @@ def text_to_children(text):
     html_children = []
     for text_node in text_nodes:
         html_node = text_node_to_html_node(text_node)
-        html_children.append(html_node)
+        if isinstance(html_node, HTMLNode):
+            html_children.append(html_node)
+        else:
+            raise Exception(f"{html_node} is not HTMLNode type")
 
     return html_children
 
@@ -114,6 +117,7 @@ def count_headers(header_markdown):
 
 def code_block_processing_children(block):
     text_between_code_markers = block.split("```")[1]
+    print(text_between_code_markers)
     code_children = text_to_children(text_between_code_markers)
     return code_children
 
@@ -125,7 +129,7 @@ def quote_block_processing_children(block):
         if line != "":
             content = line[2:]
             quote_children += text_to_children(content)
-            quote_children += [LeafNode(tag="br", value="")]
+            # quote_children += [LeafNode(tag="br", value="")]
     return quote_children
 
 def unordered_block_processing_children(block):

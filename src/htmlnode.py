@@ -44,10 +44,12 @@ class ParentNode(HTMLNode):
             raise ValueError("All parent nodes must have a tag")
         if self.children is None:
             raise ValueError("All parent nodes must have children")
+        # print(f"Debug - children type: {type(self.children)}")
+        # print(f"Debug - children: {self.children}")
         children_html = ""
         for child in self.children:
             children_html += child.to_html()
-        return f"<{self.tag}{self.props_to_html()}>{children_html}</{self.tag}>"
+        return f"<{self.tag}{self.props_to_html()}>{children_html}</{self.tag}>\n" # Add a \n to this for readability
         # return f"<{self.tag}{self.props_to_html()}>{''.join(map(lambda child: child.to_html(), self.children))}</{self.tag}>"
 
     def __repr__(self):
